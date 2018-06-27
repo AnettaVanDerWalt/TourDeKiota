@@ -1,0 +1,380 @@
+<?php
+
+//index.php
+
+$error = '';
+$firstName = '';
+$lastName = '';
+$number = '';
+$email = '';
+$type = '';
+$firstName2 = '';
+$lastName2 = '';
+$number2 = '';
+
+function clean_text($string)
+{
+	$string = trim($string);
+	$string = stringslashes($string);
+	$string = htmlspecialchars($string);
+	return $string;
+}
+
+
+if(isset($_POST["submit"]))
+{
+	if(empty($_POST["firstName"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your Name</label></p>';
+	}
+	else
+	{
+		$firstName = clean_text($_POST["firstName"]);
+		if(!preg_match("/^[a-zA-Z]*$/", $firstName)
+		{
+			$error .= '<p><label class= "text-danger"> Only letters and white space allowed</label></p>';
+		}
+	}
+
+	if(empty($_POST["lastName"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your Surname</label></p>';
+	}
+	else
+	{
+		$lastName = clean_text($_POST["lastName"]);
+		if(!preg_match("/^[a-zA-Z]*$/", $lastName)
+		{
+			$error .= '<p><label class= "text-danger"> Only letters and white space allowed</label></p>';
+		}
+	}
+
+	if(empty($_POST["email"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your Name</label></p>';
+	}
+	else
+	{
+		$email = clean_text($_POST["email"]);
+		if(!filter_var($email, FILTER_VALIDATE_EMAIL)
+		{
+			$error .= '<p><label class= "text-danger"> Invalid email/label></p>';
+		}
+	}
+
+	if(empty($_POST["number"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your number</label></p>';
+	}
+	else
+	{
+		$number = clean_text($_POST["number"]);
+		if(!preg_match("/^[0-9-+]$/", $number)
+		{
+			$error .= '<p><label class= "text-danger"> Invalid number</label></p>';
+		}
+	}
+
+
+	if(empty($_POST["firstName2"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your emerancy contact´s Name</label></p>';
+	}
+	else
+	{
+		$firstName = clean_text($_POST["firstName2"]);
+		if(!preg_match("/^[a-zA-Z]*$/", $firstName)
+		{
+			$error .= '<p><label class= "text-danger"> Only letters and white space allowed</label></p>';
+		}
+	}
+
+	if(empty($_POST["lastName2"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your emerancy contact´s Surname</label></p>';
+	}
+	else
+	{
+		$lastName = clean_text($_POST["lastName2"]);
+		if(!preg_match("/^[a-zA-Z]*$/", $lastName)
+		{
+			$error .= '<p><label class= "text-danger"> Only letters and white space allowed</label></p>';
+		}
+	}
+
+	if(empty($_POST["number2"]))
+	{
+		$error .= '<p><label class= "text-danger"> Please Enter your emerancy contact´s number</label></p>';
+	}
+	else
+	{
+		$number2 = clean_text($_POST["number2"]);
+		if(!preg_match("/^[0-9-+]$/", $number2)
+		{
+			$error .= '<p><label class= "text-danger"> Invalid number</label></p>';
+		}
+	}
+
+	if($error == '')
+	{
+		$file_open = fopen("Register.csv", "a");
+		$no_rows = count(file("Register.csv"));
+		if($no_rows > 1)
+		{
+			$no_rows = ($no_rows - 1) + 1;
+		}
+		$form_data = array(
+			'sr_no'  => $no_rows,
+			'firstName'  => $firstName,
+			'lastName'  => $lastName,
+			'number'  => $number,
+			'email'  => $email,
+			'firstName2'  => $firstName2,
+			'lastName2'  => $lastName2,
+			'number2'  => $number2
+		);
+		fputcsv($file_open, $form_data);
+		$error .= '<label class= "text-success"> Thank you for your registration!!!</label>';
+		$firstName = '';
+		$lastName = '';
+		$number = '';
+		$email = '';
+		$type = '';
+		$firstName2 = '';
+		$lastName2 = '';
+		$number2 = '';
+	}
+	
+}
+
+?>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tour de Kiota</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel=stylesheet href=styles/main.css>
+    <script src="script/validate.js"></script>
+    <script src="script/data.js"></script>
+    <script type="text/javascript" src="base64.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#register").click(function() {
+                $("#form1").toggle();
+            });
+            $("#donate").click(function() {
+                $("#form2").toggle();
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <!-- Navbar (sit on top) -->
+    <div class="w3-top">
+        <div class="w3-bar" id="myNavbar">
+            <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a href="#home" class="w3-bar-item w3-button">HOME</a>
+            <a href="#about" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-user"></i> ABOUT</a>
+            <a href="#join" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-bicycle"></i> JOIN</a>
+            <a href="#donation" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-credit-card"></i> DONATIONS</a>
+            <a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>
+        </div>
+
+        <!-- Navbar on small screens -->
+        <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
+            <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+            <a href="#join" class="w3-bar-item w3-button" onclick="toggleFunction()">JOIN</a>
+            <a href="#donation" class="w3-bar-item w3-button" onclick="toggleFunction()">DONATIONS</a>
+            <a href="#contact" class="w3-bar-item w3-button" onclick="toggleFunction()">CONTACT</a>
+        </div>
+    </div>
+
+    <!-- First Parallax Image with Logo Text -->
+    <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+        <div class="w3-display-middle" style="white-space:nowrap;">
+            <img src="image/main.jpg" width="1000px" height="700px">
+        </div>
+    </div>
+
+    <!-- Container (About Section) -->
+    <div class="w3-content w3-container w3-padding-64" id="about">
+        <h1 class="w3-center">ABOUT USE</h1>
+        <p class="w3-center"><em>Kumbatio Fundation Netherlands</em></p>
+        <p>With Tour de Kiota we want to raise money to build a house for the children and caretakers of the Kumbatio foundation. (<a href="http://www.kumbatio.org">Kumbatio Foundation</a>) Around the houses we want to have enough land available to grow fruit and vegetables and also to keep livestock for Kiota. </p>
+        <div class="w3-row">
+            <div class="w3-col m6 w3-center w3-padding-large">
+                <img src="image/Kiota_Dream.jpg" width="400px" height="300px">
+            </div>
+
+            <!-- Hide this text on small devices -->
+            <div class="w3-col m6 w3-hide-small w3-padding-large">
+                <p>The ultimate plan is to build a guesthouse with a training centre to offer the children a place where they can gain some work experience and where we can give courses to their families and to other members of the community. This will help them to become more independent. It will also teach them how to earn a living so that they will be able to buy healthier food, clothing and to continue to improve their standard of living. This will help to break the circle of poverty. </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container (Join Section) -->
+    <div class="w3-content w3-container w3-padding-64" id="join">
+        <div class="w3-row-padding w3-center">
+            <h1 class="w3-center">JOIN USE</h1>
+            <p class="w3-center"><em>Join use and tour de Kiota.</em></p>
+            <button class="w3-button w3-padding-large w3-indigo" id="register">REGISTER</button>
+            <form id="form1" method="post">
+		<?php echo $error;?>
+                <b>First Name:</b>
+                <input type="text" name="firstName" placeholder = "Enter name" value = "<?php echo $firstName; ?>">
+                <br>
+                <br>
+                <b>Last Name: </b>
+                <input type="text" name="lastName" placeholder = "Enter surname" value = "<?php echo $lastName; ?>">
+                <br>
+                <br>
+                <b>Phone Number:</b>
+                <input type="text" name="number" placeholder = "Enter number" value = "<?php echo $number; ?>">
+                <br>
+                <br>
+                <b>Email: </b>
+                <input type="text" name="email" placeholder = "Enter email" value = "<?php echo $email; ?>">
+                <br>
+                <br>
+                <b> Participate as:</b>
+                <br>
+                <input type="radio" name="type" value="Individual"> Individual
+                <br>
+                <input type="radio" name="type" value="Group"> Group
+                <br>
+                <br>
+                <b>Name of Group:</b>
+                <select name="color">
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="red">Red</option>
+                    <option value="pink">Pink</option>
+                </select>
+                <br>
+                <br>
+                <h3>In case of emerancy</h3>
+                <b>First Name:</b>
+                <input type="text" name="firstName2" placeholder = "Enter name" value = "<?php echo $firstName2; ?>">
+                <br>
+                <br>
+                <b>Last Name: </b>
+                <input type="text" name="lastName2" placeholder = "Enter surname" value = "<?php echo $lastName2; ?>">
+                <br>
+                <br>
+                <b>Phone Number:</b>
+                <input type="text" name="number2" placeholder = "Enter number" value = "<?php echo $number2; ?>">
+                <br>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+            <button class="w3-button w3-padding-large w3-indigo" id="donate">DONATE</button>
+            <form id="form2">
+                <b> Donate:</b>
+                <br>
+                <input type="radio" name="type" value="adolescent"> Individual
+                <br>
+                <input type="radio" name="type" value="mid"> Group
+                <br>
+                <br>
+                <b>Name of Group:</b>
+                <select name="color">
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="red">Red</option>
+                    <option value="pink">Pink</option>
+                </select>
+                <br>
+                <br>
+                <b>Name of Individual:</b>
+                <select name="color">
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="red">Red</option>
+                    <option value="pink">Pink</option>
+                </select>
+                <br>
+                <br>
+                <button type="button" id="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Container (Donation Section) -->
+    <div class="w3-content w3-container w3-padding-64" id="donation">
+        <div class="w3-row-padding w3-center">
+            <h1 class="w3-center">AMOUNT COLLECTED</h1>
+            <h2 class="w3-center" style="color: green; font-weight: bold;">Total amount: &euro; 0 </h2>
+            <div class="w3-row w3-center w3-border w3-border-dark-grey">
+                <a href="javascript:void(0)" onclick="openMenu(event, 'Individuals');" id="myLink">
+                    <div class="w3-col s6 tablink w3-padding-large w3-hover-red">Individuals</div>
+                </a>
+                <a href="javascript:void(0)" onclick="openMenu(event, 'Groups');">
+                    <div class="w3-col s6 tablink w3-padding-large w3-hover-red">Groups</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container (Contact Section) -->
+    <div class="w3-content w3-container w3-padding-64" id="contact">
+        <h1 class="w3-center">CONTACT USE</h1>
+        <div class="w3-row w3-padding-32 w3-section">
+            <div class="w3-col m8 w3-panel">
+                <div class="w3-large w3-margin-bottom">
+                    <i class="fa fa-map-marker fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Watermunt 9, 5236TH, 's-Hertogenbosch
+                    <br>
+                    <i class="fa fa-phone fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Phone: +31-6-18584660
+                    <br>
+                    <i class="fa fa-envelope fa-fw w3-hover-text-black w3-xlarge w3-margin-right"></i> Email: mail@mail.com
+                    <br>
+                </div>
+                <p>Leave use a note:</p>
+                <form action="/action_page.php" target="_blank">
+                    <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+                        <div class="w3-half">
+                            <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+                        </div>
+                        <div class="w3-half">
+                            <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
+                        </div>
+                    </div>
+                    <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+                    <button class="w3-button w3-black w3-right w3-section" type="submit">
+                        <i class="fa fa-paper-plane"></i> SEND MESSAGE
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="script/control.js"></script>
+    
+    
+    <!-- Footer -->
+    <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
+        <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
+        <div class="w3-xlarge w3-section">
+            <i class="fa fa-facebook-official w3-hover-opacity"></i>
+            <i class="fa fa-instagram w3-hover-opacity"></i>
+            <i class="fa fa-snapchat w3-hover-opacity"></i>
+            <i class="fa fa-twitter w3-hover-opacity"></i>
+        </div>
+    </footer>
+
+</body>
+
+</html>
