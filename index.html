@@ -75,7 +75,7 @@
             <h1 class="w3-center">JOIN USE</h1>
             <p class="w3-center"><em>Join use and tour de Kiota.</em></p>
             <button class="w3-button w3-padding-large w3-indigo" id="register">REGISTER</button>
-            <form id="form1" method="post">
+            <form id="form1" action = "php/index.php" method="post">
 		<?php echo $error;?>
                 <b>First Name:</b>
                 <input type="text" name="firstName" placeholder = "Enter name" value = "<?php echo $firstName; ?>">
