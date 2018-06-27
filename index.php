@@ -159,10 +159,7 @@ if(isset($_POST["submit"]))
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel=stylesheet href=styles/main.css>
-    <script src="script/validate.js"></script>
-    <script src="script/data.js"></script>
-    <script type="text/javascript" src="base64.js"></script>
+    <link rel=stylesheet href=main.css>
     <script>
         $(document).ready(function() {
             $("#register").click(function() {
