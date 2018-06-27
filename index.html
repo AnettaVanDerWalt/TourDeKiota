@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel=stylesheet href=styles/main.css>
-    <script src="script/validate.js"></script>
-    <script src="script/data.js"></script>
-    <script type="text/javascript" src="base64.js"></script>
+    <link rel=stylesheet href=main.css>
     <script>
         $(document).ready(function() {
             $("#register").click(function() {
@@ -79,21 +76,22 @@
             <h1 class="w3-center">JOIN USE</h1>
             <p class="w3-center"><em>Join use and tour de Kiota.</em></p>
             <button class="w3-button w3-padding-large w3-indigo" id="register">REGISTER</button>
-            <form id="form1" onsubmit="return validateForm()" method="post">
+            <form id="form1" method="post">
+		<?php echo $error;?>
                 <b>First Name:</b>
-                <input type="text" name="firstName">
+                <input type="text" name="firstName" placeholder = "Enter name" value = "<?php echo $firstName; ?>">
                 <br>
                 <br>
                 <b>Last Name: </b>
-                <input type="text" name="lastName">
+                <input type="text" name="lastName" placeholder = "Enter surname" value = "<?php echo $lastName; ?>">
                 <br>
                 <br>
                 <b>Phone Number:</b>
-                <input type="text" name="number">
+                <input type="text" name="number" placeholder = "Enter number" value = "<?php echo $number; ?>">
                 <br>
                 <br>
                 <b>Email: </b>
-                <input type="text" name="email">
+                <input type="text" name="email" placeholder = "Enter email" value = "<?php echo $email; ?>">
                 <br>
                 <br>
                 <b> Participate as:</b>
@@ -115,15 +113,15 @@
                 <br>
                 <h3>In case of emerancy</h3>
                 <b>First Name:</b>
-                <input type="text" name="firstName2">
+                <input type="text" name="firstName2" placeholder = "Enter name" value = "<?php echo $firstName2; ?>">
                 <br>
                 <br>
                 <b>Last Name: </b>
-                <input type="text" name="lastName2">
+                <input type="text" name="lastName2" placeholder = "Enter surname" value = "<?php echo $lastName2; ?>">
                 <br>
                 <br>
                 <b>Phone Number:</b>
-                <input type="text" name="number2">
+                <input type="text" name="number2" placeholder = "Enter number" value = "<?php echo $number2; ?>">
                 <br>
                 <br>
                 <input type="submit" value="Submit">
